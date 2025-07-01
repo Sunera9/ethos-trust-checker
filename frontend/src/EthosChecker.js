@@ -97,6 +97,10 @@ const CsvUploadComponent = () => {
   const [scoreFilter, setScoreFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
 
+  // Use environment variable for backend URL
+  const backendUrl =
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+
   const handleCsvUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -119,7 +123,7 @@ const CsvUploadComponent = () => {
         for (let i = 0; i < addresses.length; i++) {
           const addr = addresses[i];
           try {
-            const res = await fetch("http://localhost:4000/api/get-user-info", {
+            const res = await fetch(`${backendUrl}/api/get-user-info`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ address: addr }),
@@ -154,7 +158,7 @@ const CsvUploadComponent = () => {
     setManualResult(null);
 
     try {
-      const res = await fetch("http://localhost:4000/api/get-user-info", {
+      const res = await fetch(`${backendUrl}/api/get-user-info`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ address: manualAddress.trim() }),
@@ -200,25 +204,30 @@ const CsvUploadComponent = () => {
       if (scoreFilter) {
         const score = result.score;
         switch (scoreFilter) {
+          case "Very-high":
+            matchesScore = score !== null && score >= 2000 && score <= 2399;
+            break;
           case "high":
-            matchesScore = score !== null && score >= 80;
+            matchesScore = score !== null && score >= 1600 && score < 2000;
             break;
           case "medium":
-            matchesScore = score !== null && score >= 60 && score < 80;
+            matchesScore = score !== null && score >= 1200 && score < 1600;
             break;
           case "low":
-            matchesScore = score !== null && score < 60;
+            matchesScore = score !== null && score >= 800 && score < 1200;
             break;
-          case "null":
-            matchesScore = score === null;
+          case "bad":
+            matchesScore = score !== null && score < 800;
             break;
+          default:
+            matchesScore = true;
         }
       }
 
       let matchesStatus = true;
       if (statusFilter) {
         matchesStatus =
-          statusFilter === "success" ? !result.error : !!result.error;
+          statusFilter === "Ethos User" ? !result.error : !!result.error;
       }
 
       return matchesSearch && matchesLevel && matchesScore && matchesStatus;

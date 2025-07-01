@@ -7,6 +7,9 @@ export default function App() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const backendUrl =
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+
   const handleFile = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -38,12 +41,9 @@ export default function App() {
 
     setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/get-scores",
-        {
-          wallets,
-        }
-      );
+      const response = await axios.post(`${backendUrl}/api/get-scores`, {
+        wallets,
+      });
       setResults(response.data);
     } catch (error) {
       alert("Error fetching scores");
