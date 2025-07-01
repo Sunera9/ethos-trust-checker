@@ -337,13 +337,14 @@ const CsvUploadComponent = () => {
             gutterBottom
             sx={{ fontWeight: "bold", color: "#90caf9" }}
           >
-            Ethos Score Analyzer
+            🧪 Ethos Score Bulk Analyzer
           </Typography>
           <Typography
             variant="body1"
             sx={{ mb: 3, opacity: 0.9, color: "#aaa" }}
           >
-            Upload a CSV file with addresses to analyze user scores and levels
+            Upload a CSV file with addresses to analyze user scores and levels.{" "}
+            Make sure the column name is [address]
           </Typography>
 
           <Button
