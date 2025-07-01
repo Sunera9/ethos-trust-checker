@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.10.0",
     "csv-parser": "^3.2.0",
     "lucide-react": "^0.525.0",
     "multer": "^2.0.1",
