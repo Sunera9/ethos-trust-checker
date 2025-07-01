@@ -12,8 +12,9 @@ const userRoutes = require("./routes/userRoute");
 const csvRoutes = require("./routes/csvRoute");
 
 const app = express();
-const PORT = 4000;
 
+
+const PORT = process.env.PORT || 3000;
 
 
 app.use(
